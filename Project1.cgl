@@ -1,0 +1,31 @@
+Functions called:
+ fflush (4 times)
+ delete (11 times)
+ free (7 times)
+ delete[] (10 times)
+ sinl (38 times)
+ cosl (80 times)
+ new[] (10 times)
+ vsnprintf (24 times)
+ strcpy (2 times)
+ strcat (28 times)
+ new (11 times)
+ SysReallocMem (419 times)
+ SysFreeMem (14272 times)
+ lstrlenA (1 times)
+ lstrcpyA (4 times)
+ memset (2 times)
+ SysGetMem (14397 times)
+ calloc (1 times)
+ strlen (65 times)
+ realloc (1 times)
+ strdup (1 times)
+ malloc (4 times)
+ memcpy (246 times)
+Resource types used:
+ object array (10 allocs, 7 max)
+ object (11 allocs, 11 max)
+ memory block (14404 allocs, 3440 max)
+Modules used:
+ 00400000 12/08/2012 15:11:20 C:\La-7\Test2_26_07_2012\Project1.exe
+==========================================
