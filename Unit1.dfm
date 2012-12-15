@@ -1,12 +1,12 @@
 object Form1: TForm1
   Left = 208
   Top = 132
-  Width = 667
-  Height = 517
+  Width = 687
+  Height = 540
   Caption = 'Измерение фотопроводимости и фотомагнитного эффекта'
   Color = clBtnFace
-  Constraints.MaxHeight = 517
-  Constraints.MaxWidth = 667
+  Constraints.MaxHeight = 540
+  Constraints.MaxWidth = 687
   Constraints.MinHeight = 517
   Constraints.MinWidth = 667
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object Form1: TForm1
     Top = 0
     Width = 657
     Height = 441
-    ActivePage = Resistance
+    ActivePage = FirstTab
     MultiLine = True
     TabOrder = 0
     object FirstTab: TTabSheet
@@ -351,29 +351,6 @@ object Form1: TForm1
         Caption = 'пФурье'
         Enabled = False
         TabOrder = 15
-        OnClick = Button2Click
-      end
-      object Edit1: TEdit
-        Left = 288
-        Top = 328
-        Width = 121
-        Height = 21
-        TabOrder = 16
-        Text = '19'
-        OnChange = Edit1Change
-        OnKeyPress = Edit1KeyPress
-      end
-      object UpDown1: TUpDown
-        Left = 409
-        Top = 328
-        Width = 16
-        Height = 21
-        Associate = Edit1
-        Min = 0
-        Max = 32767
-        Position = 19
-        TabOrder = 17
-        Wrap = False
       end
       object Memo6: TMemo
         Left = 0
@@ -381,7 +358,7 @@ object Form1: TForm1
         Width = 289
         Height = 73
         ScrollBars = ssVertical
-        TabOrder = 18
+        TabOrder = 16
       end
       object Button4: TButton
         Left = 560
@@ -389,7 +366,7 @@ object Form1: TForm1
         Width = 75
         Height = 25
         Caption = 'Не нажимать!'
-        TabOrder = 19
+        TabOrder = 17
         OnClick = Button4Click
       end
       object Button10: TButton
@@ -398,7 +375,7 @@ object Form1: TForm1
         Width = 75
         Height = 25
         Caption = 'Button10'
-        TabOrder = 20
+        TabOrder = 18
         OnClick = Button10Click
       end
       object Edit2: TEdit
@@ -406,7 +383,7 @@ object Form1: TForm1
         Top = 136
         Width = 81
         Height = 21
-        TabOrder = 21
+        TabOrder = 19
         Text = '2'
       end
     end
@@ -1403,8 +1380,8 @@ object Form1: TForm1
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 444
-    Width = 659
+    Top = 463
+    Width = 671
     Height = 19
     Panels = <
       item

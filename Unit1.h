@@ -4,9 +4,9 @@
 #define Unit1H
 //---------------------------------------------------------------------------
 // данный путь должен совпадать с папкой куда установлены драйвера и примеры
-#include "C:\Program Files\Vt\Samples\INTERFACES\IADCDevice.h"
-#include "C:\Program Files\Vt\Samples\INTERFACES\IFactory.h"
-#include "C:\Program Files\Vt\Samples\INTERFACES\DllClient.h"
+#include "J:\Program Files (x86)\Vt\Samples\INTERFACES\IADCDevice.h"
+#include "J:\Program Files (x86)\Vt\Samples\INTERFACES\IFactory.h"
+#include "J:\Program Files (x86)\Vt\Samples\INTERFACES\DllClient.h"
 #include <Classes.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
@@ -107,7 +107,6 @@ __published:	// IDE-managed Components
     TButton *Button2;
     TLineSeries *Series1;
     TLineSeries *Series4;
-    TEdit *Edit1;
         TEdit *Lfilter1;
     TButton *uiFFTHall;
     TButton *uiFFTFaradey;
@@ -120,7 +119,6 @@ __published:	// IDE-managed Components
         TSaveDialog *SaveDialog1;
         TOpenDialog *OpenDialog1;
     TLineSeries *Series5;
-    TUpDown *UpDown1;
     TMemo *Memo6;
         TLineSeries *out1;
         TLineSeries *out2;
@@ -194,10 +192,8 @@ __published:	// IDE-managed Components
     void __fastcall uiFFTHallClick(TObject *Sender);
     void __fastcall uiFFTFaradeyClick(TObject *Sender);
     void __fastcall uiFFTFoygtClick(TObject *Sender);
-    void __fastcall Button2Click(TObject *Sender);
     void __fastcall N5Click(TObject *Sender);
         void __fastcall N4Click(TObject *Sender);
-    void __fastcall Edit1Change(TObject *Sender);
 
     TLineSeries * __fastcall GetCurrentSeries(int curve);
     TLineSeries * __fastcall GetSelectedSeries(int curve);
