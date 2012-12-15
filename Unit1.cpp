@@ -49,7 +49,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 экстраполяция
 ручная регулировка шага
 уменьшить задержку  + теперь 500мс
-кнопки очистки и фильтра на все вкладки +
 предусмотреть "единичное измерение"
 возможность записи "поверх" - т.е. удалять предыдущие значения и писать поверх новые
 фукнция удаления определенного интервала точек
@@ -87,7 +86,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::LoadLa7(void)
 {
-;
+
 }
 
 
@@ -284,7 +283,7 @@ bS = !bS;
 
 
         // индексы отбрасывания частот для преобразования Фурье
-        Edit1->Enabled=0;
+        //Edit1->Enabled=0;
         //FFTResCrop->Enabled=0;
         //FFTHallCrop->Enabled=0;
         //FFTFaradeyCrop->Enabled=0;
@@ -334,7 +333,7 @@ bS = !bS;
         uiFFTFoygt->Enabled=1;
 
         // индексы отбрасывания частот для преобразования Фурье
-        Edit1->Enabled=1;
+        //Edit1->Enabled=1;
         //FFTResCrop->Enabled=1;
         //FFTHallCrop->Enabled=1;
         //FFTFaradeyCrop->Enabled=1;
@@ -541,8 +540,6 @@ void __fastcall TForm1::uiFFTResClick(TObject *Sender)
 
 Tr_Filter((ResCurveIndex->ItemIndex==0?SeriesRes1:SeriesRes2),SeriesFFTRes,Lfilter1->Text.ToInt(),Fd1->Text.ToInt(),
 Fp1->Text.ToInt(),Fz1->Text.ToInt());
-//Ftransform(SeriesRes1,SeriesFFTRes,out1,StrToInt(FFTResCrop->Text));
-
 }
 //---------------------------------------------------------------------------
 
@@ -550,7 +547,6 @@ void __fastcall TForm1::uiFFTHallClick(TObject *Sender)
 {
 Tr_Filter((HallCurveIndex->ItemIndex==0?SeriesHall1:SeriesHall2),SeriesFFTHall,Lfilter2->Text.ToInt(),Fd2->Text.ToInt(),
 Fp2->Text.ToInt(),Fz2->Text.ToInt());
-//Ftransform(SeriesHall1,SeriesFFTHall,out2,StrToInt(FFTHallCrop->Text));
 }
 //---------------------------------------------------------------------------
 
@@ -558,8 +554,6 @@ void __fastcall TForm1::uiFFTFaradeyClick(TObject *Sender)
 {
 Tr_Filter((FaradeyCurveIndex->ItemIndex==0?SeriesFaradey1:SeriesFaradey2),SeriesFFTFaradey,Lfilter3->Text.ToInt(),Fd3->Text.ToInt(),
 Fp3->Text.ToInt(),Fz3->Text.ToInt());
-//Ftransform(SeriesFaradey1,SeriesFFTFaradey,out3,StrToInt(FFTFaradeyCrop->Text));
-
 }
 //---------------------------------------------------------------------------
 
@@ -567,71 +561,8 @@ void __fastcall TForm1::uiFFTFoygtClick(TObject *Sender)
 {
 Tr_Filter((FoygtCurveIndex->ItemIndex==0?SeriesFoygt1:SeriesFoygt2),SeriesFFTFoygt,Lfilter4->Text.ToInt(),Fd4->Text.ToInt(),
 Fp4->Text.ToInt(),Fz4->Text.ToInt());
-//Ftransform(SeriesFoygt1,SeriesFFTFoygt,out4,StrToInt(FFTFoygtCrop->Text));
 }
 //---------------------------------------------------------------------------
-
-void __fastcall TForm1::Button2Click(TObject *Sender)
-{
-
-Series3->Clear();
-Series4->Clear();
-Series2->Clear();
-Series1->Clear();  // убираемся
-Series5->Active=false;// чтобы не мешал
-long double x=0;
-for(int i=0;i<1500;i++)  // пишем тестовую на график
-{
-//Series2->AddXY(x,5*sin(2*x),"",clBlack);
-Series1->AddXY(x,x*x+rand()%3*sin(25*x)+rand()%2*sin(50*x),"",clRed);
-//Memo1->Lines->Add(FloatToStr(Series1->XValues->Last()) + "   " + FloatToStr(sin(x)+sin(25*x)+sin(50*x)));
-//Series4->AddXY(x,10*sin(x)+sin(50*x)+sin(100*x),"",clGreen);
-//Series4->AddXY(x,x*x,"",clBlack);
-x+=0.02+rand()%10/1000.;
-}
-
-//Ftransform(Series1,Series2,Series3,Edit1->Text.ToInt());
-
-// черная на графике - восстановленный
-// красная - тестовый
-// синий - спектр
-
-
-//---------------------
-/*SYSTEMTIME st;
-GetLocalTime(&st);
-
-Memo1->Lines->Add((String)st.wSecond + "   " + st.wMilliseconds);
-Ftransform(Series3,Series1,Series2);
-GetLocalTime(&st);
-
-Memo1->Lines->Add((String)st.wSecond+ "   " + st.wMilliseconds); */
-//----------------------
-//invFtransform(Series1,Series4);
-//FFT(Series3,Series4,StrToInt(Edit1->Text.ToInt()));
-//Series3->Active=false;
-//Series2->Active=false;
-//Series1->Active=false;
-//Series3->Active=false;
-//Series4->Active=false;
-//Series5->Active=false;
-
-/*for(int i=0;i<Series1->XValues->Count();i++)
-{
-if(Series1->YValues->Value[i]!=0)
-Series4->AddXY(Series1->XValues->Value[i],Series3->YValues->Value[i]/Series1->YValues->Value[i],"",clBlue);
-else
-Series4->AddXY(Series1->XValues->Value[i],0,"",clBlue);
-
-}
-for(int i=0;i<Series3->XValues->Count();i++)
-{
-Series3->YValues->Value[i]*=Series4->YValues->Value[i];
-}  */
-
-}
-//---------------------------------------------------------------------------
-
 
 void __fastcall TForm1::N5Click(TObject *Sender)  // сохранение
 {
@@ -691,151 +622,9 @@ int b;
       S->AddXY(tts->Strings[i].SubString(1,b-1).ToDouble(), // первая часть до пробела это х, вторая после у
       tts->Strings[i].SubString(b+1,tts->Strings[i].Length()).ToDouble(),
       "",clRed);
-      }    
+      }
 }
 }
-//---------------------------------------------------------------------------
-
-//---------Двигаем полосу "обрезания" для БФП-------------------------------
-void __fastcall TForm1::Edit1Change(TObject *Sender)
-{
-if(Edit1->Text=="")
-Edit1->Text=0;
-Series5->XValues->Value[0]=Edit1->Text.ToDouble();
-Series5->XValues->Value[1]=Edit1->Text.ToDouble();
-Series5->Repaint();              // перерисовка графика
-}
-//----Преобразование Фурье---------------------------------------------------
-
-// теоретически - мусор и его надо отсюда выпилить.
-//---------------------------------------------------------------------------
-/*void Ftransform(TLineSeries * data,TLineSeries * out,TLineSeries * New,int wCrop)
-{
-Form1->StatusBar->Panels->Items[1]->Text="Запущено преобразование Фурье";
-if(data->XValues->Count()==0) // обработка ошибок:)
-{
-ShowMessage("Массив данных пуст!");
-Form1->StatusBar->Panels->Items[1]->Text="Готова к работе.";
-return;
-}
-
-// чистим выходной график
-out->Clear();
-
-long double w,dx,f1,f2,h,b1,b2,q1,q2,dw; // частота, шаг по х, значения функций, шаг, коэффициенты, шаг по частоте
-long double x1,x2;                       // значения х
-int l=data->XValues->Count();  // записываем длину массива
-//out1.setlength(l);             прощай
-long double *outldr=new long double [l];   // выделяем память под прямое преобразование
-long double *outldc=new long double [l];
-dx=(data->XValues->Last()-data->XValues->First())/(double)(l-1); // определяем среднее изменение по х
-
-dw=(M_PI/dx)/l;         // шаг по частоте
-w=0;                     // начальная частота
-//Form1->Memo6->Lines->Add(FloatToStr(dx)+ "   " +FloatToStr(dw));
-for(int k=0;k<l;k++,w+=dw)
-{
-outldr[k]=0;         // обнуляем значения массива
-outldc[k]=0;
-for(int i=0;i<(l-1);i++ )
-{
-x1=data->XValues->Value[i];// предыдущее значение х
-x2=data->XValues->Value[i+1];// следующее х
-f1=data->YValues->Value[i];// предыдущее значение y
-f2=data->YValues->Value[i+1];// следующее y
-h=fabs(x2-x1);               // текущий шаг i+1  
-//коэффициенты
-b1=w*h;
-b2=b1*b1;
-//double temp;
-
-// условие |b1|>=0.1
-q1=(sqrt(b2)>=0.1)?((1.-cosl(b1))/b2):(1/2.-b2/24.*(1-b2/30.*(1-b2/56.)));
-q2=(sqrt(b2)>=0.1)?((1.-sinl(b1)/b1)/b1):(b1/6.*(1.-b2/20.*(1-b2/42.*(1-b2/72.))));
-outldr[k]+=h*(q1*(f1*cosl(w*x1)+f2*cosl(w*x2))-q2*(f1*sinl(w*x1)-f2*sinl(w*x2)));
-//temp=outldr[k];
-outldc[k]+=h*(q1*(f1*sinl(w*x1)+f2*sinl(w*x2))+q2*(f1*cosl(w*x1)-f2*cosl(w*x2)));
-//temp=outldc[k];
-
-}
-
-//long double temp=out1[k].x;
-out->AddXY(w,fabs(outldr[k]),"",clBlue);  //вывод спектра
-//Form1->Memo1->Lines->Add(FloatToStr(w) +"   " + FloatToStr(out1[k].x)+"   " + FloatToStr(out1[k].y));
-if(k%50==0)                 // обновляем график каждые 50 значений
-Form1->Update();
-//Form1->Series4->AddXY(w,sqrt(pow(outldr[k],2)),"",clRed);
-//Form1->Memo1->Lines->Add(FloatToStr(outldr[k])+"   "+FloatToStr(outldc[k]));
-
-}
-long double *out2dr=new long double [l];   // выделяем память под прямое преобразование
-long double *out2dc=new long double [l];
-
-// обрезка
-for(int k=(wCrop/dw);k<l;k+=1) // начинаем с нужной частоты перести её в список параметров!!!!
-{
-outldc[k]=0;
-outldr[k]=0;
-}
-// восстанавливаем функцию
-//-----------------------------------------------------------------------------
-long double x,w1,w2;    // текущее значение х, и частОты
-for(int k=0;k<l;k++)
-{
-outldc[k]*=-1;         // умножаем комплексную часть на -1  ибо перед ней в преобразовании стоит -
-long double f1c,f2c;
-out2dc[k]=0;
-out2dr[k]=0;
-
-x=data->XValues->Value[k];// если поставить модуль - отрицательная часть будет противоположной.
-
-for(int i=0;i<(l-1);i++)
-{
-
-w1=out->XValues->Value[i];
-w2=out->XValues->Value[i+1];
-
-f1=outldr[i];  // предыдущее значение y
-f2=outldr[i+1];// следующее y
-f1c=outldc[i]; // предыдущее значение y
-f2c=outldc[i+1];// следующее y
-
-h=w2-w1;               // текущий шаг i+1
-
-
-//коэффициенты
-b1=h;
-b2=b1*b1;
-
-q1=(sqrt(b2)>=0.1)?((1.-cosl(b1))/b2):(1/2.-b2/24.*(1-b2/30.*(1-b2/56.)));
-q2=(sqrt(b2)>=0.1)?((1.-sinl(b1)/b1)/b1):(b1/6.*(1.-b2/20.*(1-b2/42.*(1-b2/72.))));
-
-// действительная часть
-out2dr[k]+=h*(q1*(f1*cosl(w1*x)+f2*cosl(w2*x))-q2*(f1*sinl(w1*x)-f2*sinl(w2*x)))
--        h*(q1*(f1c*sinl(w1*x)+f2c*sinl(w2*x))+q2*(f1c*cosl(w1*x)-f2c*cosl(w2*x)));
-// мнимая часть
-out2dc[k]+=h*(q1*(f1*sinl(w1*x)+f2*sinl(w2*x))+q2*(f1*cosl(w1*x)-f2*cosl(w2*x)))+
-h*(q1*(f1c*cosl(w1*x)+f2c*cosl(w2*x))-q2*(f1c*sinl(w1*x)-f2c*sinl(w2*x)));
-
-}
-//----------------------------------
-//--------вывод восстановленной функции---------
-
-// коэффициент вывода - пи
-New->AddXY(data->XValues->Value[k],(out2dr[k])/(M_PI),"",clBlack);
-if(k%50==0)           // обновляем график каждые 50 значений
-Form1->Update();
-//Form1->Memo1->Lines->Add(FloatToStr(data->XValues->Value[k])
-//+"   "+FloatToStr(out2[k].x)+"    "+FloatToStr(out2[k].y));
-
-}
-delete[] outldr; // освобождаем память
-delete[] outldc;
-delete[] out2dr;
-delete[] out2dc;
-Form1->StatusBar->Panels->Items[1]->Text="Готова к работе.";
-}  */
-
 
 // выбор активного графика
 TLineSeries * __fastcall TForm1::GetCurrentSeries(int curve)
@@ -1019,86 +808,7 @@ Memo1->Lines->Add(L);
 delete []x;
 delete []y;
 
-
-/*Series1->Active=1;
-Series2->Active=1;
-Series3->Active=1;
-Series1->Clear();
-Series2->Clear();
-Series3->Clear();
-double x=0;
-for(int i=0;i<1000;i++,x+=0.2)
-{
-Series1->AddXY(x+(rand()%10)/100.,x*x+10*sin(50*x),"",clRed);
 }
-Form1->Update();
-FFT(Series1,Series2,Series3,Edit1->Text.ToInt());
-Form1->Update();  */
-
-}
-// еще одно преобразование Фурье, тоже надо выпиливать.
-//---------------------------------------------------------------------------
-/*void FFT(TLineSeries * data, TLineSeries * complexFFT, TLineSeries *out, int crop)
-{
-if(data->XValues->Count()==0)
-{
-ShowMessage("Ошибка!Получен пустой массив данных!");
-return;
-}
-alglib::real_1d_array rx1; // объявляем массив действительных чисел
-alglib::real_1d_array ry1;
-alglib::ae_int_t n=data->XValues->Count();// это количество элементов массива
-alglib::complex_1d_array fy1;// комплесный массив
-alglib::complex_1d_array fx1;// комплесный массив
-
-double * p=new double[n];// временный массив для данных
-for(int i=0;i<n;i++)
-{
-p[i]=data->YValues->Value[i]; // помещаем данные во временный массив
-
-}
-ry1.setcontent(n,p); // помещаем данные в массив действительных чисел.
-for(int i=0;i<n;i++)
-p[i]=data->XValues->Value[i];
-rx1.setcontent(n,p); // помещаем данные в массив действительных чисел.
-
-fftr1d(ry1,n,fy1); // вызываем БФП
-fftr1d(rx1,n,fx1); // вызываем БФП
-
-if(complexFFT!=0) // если нам предоставили второй график
-
-for(int i=0;i<=n/2;i++) //выводим на него разложение
-{
-    complexFFT->AddY(fabs(fx1[i].x),"",clBlue);
-    //Form1->Memo1->Lines->Add(FloatToStr(fy1[i].x)+"   "+FloatToStr(fy1[i].y));
-}
-
-for(int i=crop;i<n-crop;i++) // убираем лишние частоты
-{
-    // всё что больше граничной
-
-        fy1[i].x=0;
-        fy1[i].y=0;
-        //fx1[i].x=0;
-        //fx1[i].y=0;
-
-}
-
-fftr1dinv(fy1,n,ry1); // делаем обратное преобразование
-fftr1dinv(fx1,n,rx1); // делаем обратное преобразование
-
-for(int i=0;i<n;i++)
-{
-out->AddXY(rx1[i],ry1[i],"",clBlack);
-//out->YValues->Value[i]=ry1[i]; // сохраняем данные обратно
-//out->XValues->Value[i]=rx1[i];
-}
-delete [] p;
-
-}   */
-
-
-
 
 // ВНИМАНИЕ!!! Напрямую не вызывать!!! Пользоваться трамплином!!!---------------
 double Filter2 (const double in[], double out[], int sizeIn, int length, double Fdisk, double Fpropysk,double Fzatyh)
@@ -1109,31 +819,6 @@ long double Fs = Fpropysk; //Частота конца полосы пропускания  20
 long double Fx = Fzatyh; //Частота начала полосы затухания    30
 
 long double *H= new long double [N] ; //Импульсная характеристика фильтра
-long double *H_id= new long double [N]; //Идеальная импульсная характеристика
-long double *W= new long double [N]; //Весовая функция
-
-/*long double H [N] = {0}; //Импульсная характеристика фильтра
-long double H_id [N] = {0}; //Идеальная импульсная характеристика
-long double W [N] = {0}; //Весовая функция        */
-
-//Расчет импульсной характеристики фильтра
-//long double Fc = (Fs + Fx) / (2 * Fd);
-
-/*for (int i=0;i<N;i++)
-{
-if (i==0) H_id[i] = 2*M_PI*Fc;
-else H_id[i] = sinl(2*M_PI*Fc*i )/(M_PI*i);
-// весовая функция Блекмена
-W [i] = 0.42 - 0.5 * cosl((2*M_PI*i) /( N-1)) + 0.08 * cosl((4*M_PI*i) /( N-1));
-H [i] = H_id[i] * W[i];
-}    */
-
-//Нормировка импульсной характеристики
-/*long double SUM=0;
-for (int i=0; i<N; i++) SUM +=H[i];
-for (int i=0; i<N; i++) H[i]/=SUM; //сумма коэффициентов равна 1
- */
-//Фильтрация входных данных
 
 H[0]=0.00070253401856393;
 H[1]= 0.00231935244351841;
@@ -1192,8 +877,6 @@ for (int j=0; j<(i>N-1?N-1:i); j++)// та самая формула фильтра
 out[i]+= H[j]*in[i-j];
 }
 delete [] H;
-delete [] H_id;
-delete [] W;
 return (N-1)/2.0;
 }
 
@@ -1216,10 +899,6 @@ long double Fx = Fzatyh; //Частота начала полосы затухания    20
 long double *H= new long double [N] ; //Импульсная характеристика фильтра
 long double *H_id= new long double [N]; //Идеальная импульсная характеристика
 long double *W= new long double [N]; //Весовая функция
-
-/*long double H [N] = {0}; //Импульсная характеристика фильтра
-long double H_id [N] = {0}; //Идеальная импульсная характеристика
-long double W [N] = {0}; //Весовая функция  */
 
 //Расчет импульсной характеристики фильтра
 long double Fc = (Fs + Fx) / (2 * Fd);
@@ -1324,9 +1003,7 @@ for(int i=0;i<Series3->XValues->Count();i++)
         X[i][2]=Xt[2][i]=Series3->XValues->Value[i];
         X[i][3]=Xt[3][i]=1;
         X[i][4]=Xt[4][i]=-Series3->YValues->Value[i];
-        }
-
-
+        }    
 }
 //---------------------------------------------------------------------------
 
@@ -1399,74 +1076,6 @@ void __fastcall TForm1::Button10Click(TObject *Sender)
 {
 Series3->Active=!Series3->Active;
 }
-//---------------------------------------------------------------------------
-// считает определитель 3го порядка, полагает что данные расположены в следующем виде:
-//1 2 3
-//4 5 6
-//7 8 9
-
-double det3(double *x)
-{
-return x[1]*x[5]*x[9]+x[2]*x[6]*x[7]+x[3]*x[4]*x[8]-x[3]*x[5]*x[7]-x[2]*x[4]*x[9]-x[3]*x[4]*x[8];
-}
-// считает определитель 4 порядка, разложением по первому столбцу
-// предполагает что входные данные расположены следующим образом:
-// 1 2 3 4
-// 5 6 7 8
-// 9 10 11 12
-// 13 14 15 16
-double det4(double *x)
-{
-double x1[9]={x[6],x[7],x[8],x[10],x[11],x[12],x[14],x[15],x[16]};
-double x2[9]={x[5],x[7],x[8],x[9],x[11],x[12],x[13],x[15],x[16]};
-double x3[9]={x[5],x[6],x[8],x[9],x[10],x[12],x[13],x[14],x[16]};
-double x4[9]={x[5],x[6],x[7],x[9],x[10],x[11],x[13],x[14],x[15]};
-return x[1]*det3(x1)-x[2]*det3(x2)+x[3]*det3(x3)+x[4]-det3(x4);
-}
-
-// решает уравнение записанное в виде матрицы, 4 го порядка, методом Крамера,
-//входные данные:
-
-/*1 2 3 4
-5 6 7 8
-9 10 11 12
-13 14 15 16
-b1 b2 b3 b4*/
-
-void Kramer(double *in,double *out)
-{
-double x1[16]={in[17],in[2],in[3],in[4],
-               in[18],in[6],in[7],in[8],
-               in[19],in[10],in[11],in[12],
-               in[20],in[14],in[15],in[16]};
-double x2[16]={in[1],in[17],in[3],in[4],
-               in[5],in[18],in[7],in[8],
-               in[9],in[19],in[11],in[12],
-               in[13],in[20],in[15],in[16]};
-double x3[16]={in[1],in[2],in[17],in[4],
-               in[5],in[6],in[18],in[8],
-               in[9],in[10],in[19],in[12],
-               in[13],in[14],in[20],in[16]};
-double x4[16]={in[1],in[2],in[3],in[17],
-               in[5],in[6],in[7],in[18],
-               in[9],in[10],in[11],in[19],
-               in[13],in[14],in[15],in[20]};
-double det;
-double detx;
-det=det4(in);
-if(det==0)
-{
-ShowMessage("Главный определитель равен 0! Продолжение не возможно.");
-return;
-}
-
-out[0]=det4(x1)/det;
-out[1]=det4(x2)/det;
-out[2]=det4(x3)/det;
-out[3]=det4(x4)/det;
-
-}
-
 
 // функция трамплин для фильтра.  ----------------------------------------------
 double Tr_Filter2(TLineSeries *inS,TLineSeries *outS,int length,double Fdisk, double Fpropysk,double Fzatyh)
@@ -1501,7 +1110,7 @@ Fp1->Text.ToInt(),Fz1->Text.ToInt());
 }
 //---------------------------------------------------------------------------
 
-
+// толку от неё мало, теоретически скоро надо будет выпиливать.
 void __fastcall TForm1::Button12Click(TObject *Sender)
 {
 // увеличение количества точек на графике в два раза
@@ -1531,15 +1140,10 @@ for(int i=0;i<length;i++)
  for(int i=0;i<2*length;i++)
  SeriesRes1->AddXY(x1[i],y1[i],"",clRed);
 
-
-
-
-
-delete [] x;
+ delete [] x;
 delete [] y;
 delete [] x1;
 delete [] y1;
-;
 }
 //---------------------------------------------------------------------------
 void fillspace(double *xm,double *ym, int l,int r)
@@ -1637,9 +1241,6 @@ Button8Click(Sender);
 }
 }
 //---------------------------------------------------------------------------
-
-
-
 
 void __fastcall TForm1::Button13Click(TObject *Sender)
 {
